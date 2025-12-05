@@ -13,9 +13,16 @@ The Universal Resolver is a smart contract that simplifies the process of resolv
 
 Adopting the universal resolver will make the transition to [ENSv2](https://ens.domains/ensv2) seamless.
 
+## Test Case
+
+You might be asking yourself, "How do I know if my application is already using the Universal Resolver?"
+
+To answer that question, we've prepared a test case. If you're using the Universal Resolver, your app should resolve `ur.gtest.eth` to `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE`. If it's not, it will resolve to `0x1111111111111111111111111111111111111111`.
+
+
 ## Implementation Guide
 
-The universal resolver is the only ENS smart contract that should to be hardcoded into an application for resolution. You can find the [latest deployment addresses here](/learn/deployments).
+The Universal Resolver should be treated as the canonical entrypoint to ENS for name resolution. `0xeEeEEEeE14D718C2B47D9923Deab1335E144EeEe` is the official deployment address on Ethereum Mainnet and testnets, which is a proxy contract owned by ENS DAO that will be upgraded to support [ENSv2](https://ens.domains/ensv2) in the future.
 
 This guide assumes that your application already supports [CCIP Read](https://eips.ethereum.org/EIPS/eip-3668).
 
@@ -107,7 +114,7 @@ const client = createPublicClient({
 
 const resolveRes = await client.readContract({
   abi: universalResolverAbi,
-  address: '0xaBd80E8a13596fEeA40Fd26fD6a24c3fe76F05fB',
+  address: '0xeEeEEEeE14D718C2B47D9923Deab1335E144EeEe',
   functionName: 'resolve',
   args: [dnsEncodedName, data],
 })
@@ -162,7 +169,7 @@ const client = createPublicClient({
 
 const [primaryName] = await client.readContract({
   abi: universalResolverAbi,
-  address: '0xaBd80E8a13596fEeA40Fd26fD6a24c3fe76F05fB',
+  address: '0xeEeEEEeE14D718C2B47D9923Deab1335E144EeEe',
   functionName: 'reverse',
   args: [address, 60n],
 })
